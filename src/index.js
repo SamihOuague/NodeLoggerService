@@ -1,28 +1,19 @@
 let express = require("express");
 let app = express();
 let cors = require("cors")
+let Logger = require("./logger/Router");
+const mongoose = require('mongoose');
 
+mongoose.connect('mongodb://localhost/mydb', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).catch((err) => console.log(err));
 
 app.use(express.json());
 app.use(cors());
 
-app.get("/", (req, res) => {
-    res.send({msg: "OK"});
-});
+app.use(Logger);
 
-app.post("/sell", (req, res) => {
-    console.log(req.body);
-    res.send({msg: "logged"});
-});
 
-app.post("/take-profit", (req, res) => {
-    console.log(req.body);
-    res.send({msg: "logged"});
-});
-
-app.post("/stop-loss", (req, res) => {
-    console.log(req.body);
-    res.send({msg: "logged"});
-});
 
 app.listen(3001)
